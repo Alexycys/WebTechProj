@@ -2,6 +2,10 @@ import Users from './entities/Users.js';
 import Subjects from './entities/Subjects.js';
 import Notes from './entities/Notes.js';
 import Attachments from './entities/Attachments.js';
+import Tags from './entities/Tags.js';
+import TagNote from './entities/TagNote.js';
+
+
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -35,8 +39,12 @@ Subjects.hasMany(Notes, {as: "Notes", foreignKey: "SubjectId"});
 Notes.belongsTo(Subjects, {as:"Subjects", foreignKey: "SubjectId"}); 
 
 //notes- attachments, relatie 1 - M
-Notes.hasMany(Attachments, {as: "Attachments", foreignKey: "SubjectId"});
-Attachments.belongsTo(Notes, {foreignKey: "SubjectId"}); 
+Notes.hasMany(Attachments, {as: "Attachments", foreignKey: "NoteId"});
+Attachments.belongsTo(Notes, {foreignKey: "NoteId"}); 
+
+//notes-tags, relatie M - M
+Tags.belongsToMany(Notes, {through: "TagNote", as: "Notes", foreignKey: "TagId"});
+Notes.belongsToMany(Tags, {through: "TagNote", as: "Tags", foreignKey: "NoteId"});
 
 
   //users
@@ -110,3 +118,43 @@ router.route('/attachment').post( async (req, res) => {
 router.route('/attachment').get( async (req, res) => {
   res.json(await getAttachment());
 })
+
+//get notes and attachments from the subject selected
+
+async function getNotesAttachFromSubject(id){
+  return await Notes.findAll({
+    where:{
+      SubjectId: parseInt(id)
+    },
+    include:[
+      {
+        model: Attachments, as: "Attachments"
+      }
+    ]
+  })
+}
+
+router.route('/subject/:id').get( async (req, res) => {
+  res.json(await getNotesAttachFromSubject(req.params.id));
+})
+
+//get all notes and attachments from a certain user
+
+async function getNotesAttachFromUser(id){
+  return await Notes.findAll({
+    where:{
+      UserId: parseInt(id)
+    },
+    include:[
+      {
+        model: Attachments, as: "Attachments"
+      }
+    ]
+  })
+}
+
+router.route('/user/:id').get( async (req, res) => {
+  res.json(await getNotesAttachFromUser(req.params.id));
+})
+
+//add tag for note
