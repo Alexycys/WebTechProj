@@ -1,11 +1,23 @@
+IF(DB_ID('NotesDB') IS NULL)
+	CREATE DATABASE NotesDB
+GO
+
 use NotesDB
 
+IF OBJECT_ID('Users') IS NOT NULL
+	drop table Users
+GO
 
-drop table Notes
-drop table Subjects
-drop table Users
-drop table Attachments
+IF OBJECT_ID('Subjects') IS NOT NULL
+	drop table Subjects
+GO
 
+IF OBJECT_ID('Attachments') IS NOT NULL
+	drop table Attachments
+GO
+
+IF OBJECT_ID('Notes') IS NOT NULL
+	drop table Notes
 GO
 
 IF OBJECT_ID('Users') IS NULL
