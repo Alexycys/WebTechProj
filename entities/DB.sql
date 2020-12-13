@@ -2,6 +2,7 @@ IF(DB_ID('NotesDB') IS NULL)
 	CREATE DATABASE NotesDB
 GO
 
+
 use NotesDB
 
 IF OBJECT_ID('Users') IS NOT NULL
@@ -18,6 +19,14 @@ GO
 
 IF OBJECT_ID('Notes') IS NOT NULL
 	drop table Notes
+GO
+
+IF OBJECT_ID('Tags') IS NOT NULL
+	drop table Tags
+GO
+
+IF OBJECT_ID('TagNote') IS NOT NULL
+	drop table TagNote
 GO
 
 IF OBJECT_ID('Users') IS NULL
