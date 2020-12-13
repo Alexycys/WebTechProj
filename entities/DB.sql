@@ -1,33 +1,12 @@
-IF(DB_ID('NotesDB') IS NULL)
-	CREATE DATABASE NotesDB
-GO
-
 use NotesDB
 
-IF OBJECT_ID('Users') IS NOT NULL
-	drop table Users
-GO
 
-IF OBJECT_ID('Subjects') IS NOT NULL
-	drop table Subjects
-GO
+drop table Notes
+drop table Subjects
+drop table Users
+drop table Attachments
 
-IF OBJECT_ID('Attachments') IS NOT NULL
-	drop table Attachments
 GO
-
-IF OBJECT_ID('Notes') IS NOT NULL
-	drop table Notes
-GO
-
-IF OBJECT_ID('Tags') IS NOT NULL
-	drop table Tags
-GO
-
-IF OBJECT_ID('TagNote') IS NOT NULL
-	drop table TagNote
-GO
-
 
 IF OBJECT_ID('Users') IS NULL
 	CREATE TABLE Users
@@ -47,7 +26,7 @@ IF OBJECT_ID('Users') IS NULL
 	(
 	NoteId INT NOT NULL IDENTITY(1, 1),
 	NoteText NVARCHAR(MAX) NOT NULL,
-    	UserId INT NOT NULL,
+    UserId INT NOT NULL,
 	NoteDate DATE DEFAULT GETDATE() NOT NULL,
 	SubjectId INT NOT NULL,
 	NoteTags NVARCHAR(MAX),
@@ -77,48 +56,5 @@ IF OBJECT_ID('Users') IS NULL
 	CONSTRAINT PK_Attachments PRIMARY KEY (AttachmentId)
 	)
 
-	GO
-
-	
-	IF OBJECT_ID('Tags') IS NULL
-	CREATE TABLE Tags
-	(
-	TagId INT NOT NULL IDENTITY(1, 1),
-	TagContent NVARCHAR(100) NOT NULL,
-	CONSTRAINT PK_Tags PRIMARY KEY (TagId)
-	)
-
-	GO
-
-	IF OBJECT_ID('TagNote') IS NULL
-	CREATE TABLE TagNote
-	(
-	TagId INT NOT NULL,
-	NoteId INT NOT NULL,
-	CONSTRAINT PK_TagNote PRIMARY KEY (TagId, NoteId)
-	)
 
 
-IF OBJECT_ID('FK_Users_Notes') IS NULL
-	ALTER TABLE Notes ADD CONSTRAINT FK_Users_Notes FOREIGN KEY (UserId) REFERENCES Users(UserId)
-GO
-
-IF OBJECT_ID('FK_Subjects_Notes') IS NULL
-	ALTER TABLE Notes ADD CONSTRAINT FK_Subjects_Notes FOREIGN KEY (SubjectId) REFERENCES Subjects(SubjectId)
-GO
-
-IF OBJECT_ID('FK_Notes_Attachments') IS NULL
-	ALTER TABLE Attachments ADD CONSTRAINT FK_Notes_Attachments FOREIGN KEY (NoteId) REFERENCES Notes(NoteId)
-GO
-
-IF OBJECT_ID('FK_Notes_Attachments') IS NULL
-	ALTER TABLE Attachments ADD CONSTRAINT FK_Notes_Attachments FOREIGN KEY (NoteId) REFERENCES Notes(NoteId)
-GO
-
-
-IF OBJECT_ID('FK_TagNote_Tags') IS NULL
-	ALTER TABLE TagNote ADD CONSTRAINT FK_TagNote_Tags FOREIGN KEY (TagId) REFERENCES Tags(TagId)
-GO
-
-IF OBJECT_ID('FK_TagNote_Notes') IS NULL
-	ALTER TABLE TagNote ADD CONSTRAINT FK_TagNote_Notes FOREIGN KEY (NoteId) REFERENCES Notes(NoteId)
