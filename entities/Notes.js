@@ -29,12 +29,7 @@ const Notes=db.define("Notes",{
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW
-    },
-    NoteTags:{
-        type:Sequelize.STRING,
-        allowNull: true,
     }
-
 
 })
 
