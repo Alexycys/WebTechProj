@@ -7,7 +7,7 @@ const TagNote=db.define("TagNote",{
     {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: false,
         allowNull: false
     },
     NoteId:

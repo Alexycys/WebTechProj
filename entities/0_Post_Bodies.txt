@@ -1,0 +1,19 @@
+//For user
+{
+    "UserName": "Gurita",
+    "UserSurname": "Alexandru",
+    "UserNickname": "Alexycys",
+    "UserPassword": "password"
+}
+{
+    "UserName": "Horhocia",
+    "UserSurname": "Andreea",
+    "UserNickname": "HorohoAndreeaRalu",
+    "UserPassword": "password3"
+}
+{
+    "UserName": "Huhulia",
+    "UserSurname": "Diana",
+    "UserNickname": "HuhuDianas",
+    "UserPassword": "password2"
+}
