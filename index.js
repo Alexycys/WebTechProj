@@ -157,4 +157,115 @@ router.route('/user/:id').get( async (req, res) => {
   res.json(await getNotesAttachFromUser(req.params.id));
 })
 
-//add tag for note
+
+
+
+//get notes for a certain tag
+
+async function getNotesFromTag(tag){
+
+  let myTag=await Tags.findOne({
+    where:{
+      TagContent: tag
+    }
+  })
+
+  //array with notes id
+  let notesId=await TagNote.findAll({
+    where:{
+      TagId: myTag.TagId
+    }
+  })
+
+
+  let notes=[]
+  for(let i=0;i<notesId.length;i++)
+  {
+    notes[i]=await Notes.findByPk(notesId[i].NoteId)
+  }
+
+  return notes
+
+}
+
+router.route('/tag/notes').get( async (req, res) => {
+  res.json(await getNotesFromTag("#economie"));
+})
+
+//get tags
+
+async function getTags(){
+  return await Tags.findAll()
+}
+
+router.route('/tags').get( async (req, res) => {
+  res.json(await getTags());
+})
+
+//get TagNote
+
+async function getTagNote(){
+  return await TagNote.findAll()
+}
+
+router.route('/tagNote').get( async (req, res) => {
+  res.json(await getTagNote());
+})
+
+//ADD TAG FOR A NOTE
+
+// async function addTagForNote(id, tag)
+// {
+ 
+//   //check if tag exists in Tags
+//   let myTag=await Tags.findOne({
+//     where:{
+//       TagContent: tag
+//     }
+//   })
+ 
+// let createTagNote;
+// //if tag exists in Tags
+// if(myTag!==null){
+// //check if tag exists for my note
+// let tagNote=await TagNote.findOne({
+//   where:{
+//     TagId: myTag.TagId,
+//     NoteId: parseInt(id)
+//   }
+// })
+
+// //if tagNote exists
+//   if(tagNote!==null)
+//   {
+//     //do not create same TagNote twice
+//     //+ give a message to user
+//     return
+//   }
+//   else{
+//       createTagNote=await TagNote.create({
+//       TagId: myTag.TagId,
+//       NoteId: parseInt(id)
+//     })
+//   }
+// }
+
+
+// else{
+//   let tagCreated=await Tags.create({
+//     TagContent: tag
+//   })
+
+
+//     createTagNote=await TagNote.create({
+//     TagId: tagCreated.TagId,
+//     NoteId: parseInt(id)
+//   })
+// }
+// return createTagNote
+// }
+
+
+// router.route('/note/:id').post( async (req, res) => {
+//   res.json(await addTagForNote(req.params.id, "#economie"));
+// })
