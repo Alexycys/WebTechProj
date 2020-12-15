@@ -188,8 +188,8 @@ async function getNotesFromTag(tag){
 
 }
 
-router.route('/tag/notes').get( async (req, res) => {
-  res.json(await getNotesFromTag("#economie"));
+router.route('/tag/notes/:tagContent').get( async (req, res) => {
+  res.json(await getNotesFromTag(req.params.tagContent));
 })
 
 //get tags
