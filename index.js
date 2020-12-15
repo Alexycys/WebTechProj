@@ -212,6 +212,51 @@ router.route('/tagNote').get( async (req, res) => {
   res.json(await getTagNote());
 })
 
+//Alex's changes
+async function addTagForNoteAlex(noteId, tagName){
+
+  let myTag=await Tags.findOne({
+    where:{
+      TagContent: tagName
+    },
+    attributes:['TagId']
+  })
+
+  //console.log(myTag);
+
+  if(myTag){
+    console.log("myTag may not be empty?");
+     await TagNote.create(
+       {
+         TagId: myTag.TagId,
+         NoteId: parseInt(noteId)
+       }
+     )
+  }
+  else{
+    console.log("I got here");
+     let myNewTag = await Tags.create(
+       {
+         TagContent: tagName
+       }
+     )
+
+     await TagNote.create(
+       {
+         TagId: myNewTag.TagId,
+         NoteId: parseInt(noteId)
+       }
+     )
+
+  }
+
+}
+
+
+router.route('/notetag/:noteId/:tagContent').post( async (req, res) => {
+  res.json(await addTagForNoteAlex(req.params.noteId, req.params.tagContent));
+})
+
 //ADD TAG FOR A NOTE
 
 // async function addTagForNote(id, tag)
