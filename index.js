@@ -74,6 +74,48 @@ router.route('/User/:id').get(async(req,res)=> {
     res.json(await getUserById(req.params.id));
 })
 
+//update User
+async function updateUsers(id, newName)
+{
+    if(parseInt(id) !== newName.UserId){
+      console.log("Entity id diff");
+      return;
+    }
+
+    let updateEntity = await getUserById(id);
+
+    if(!updateEntity){
+      console.log("There isn't a user with this id");
+      return;
+    }
+
+    return await updateEntity.update(newName);
+
+}
+
+//update user
+router.route('/user/:id').put(async(req,res)=>{
+  res.json(await updateUsers(req.params.id, req.body));
+})
+
+
+//delete from Users
+async function deleteFromUser(id)
+{
+  let deleteEntity = await getUserById(id);
+
+    if (!deleteEntity){
+        console.log("There isn't a magazin with this id");
+        return;
+    }
+
+    return await deleteEntity.destroy();
+}
+
+router.route('/user/:id').delete(async (req, res) => {
+  res.json(await deleteFromUser(req.params.id));
+})
+
   //subjects
   
 async function createSubject(subject){
@@ -100,6 +142,49 @@ async function createSubject(subject){
 router.route('/Subject/:id').get(async(req,res)=> {
       res.json(await getSubjectById(req.params.id));
   })
+
+ //update Subject 
+async function updateSubject(id, newSubject)
+{
+    if(parseInt(id) !== newSubject.SubjectId){
+      console.log("Entity id different");
+      return;
+    }
+
+    let updateEntity = await getSubjectById(id);
+
+    if(!updateEntity){
+      console.log("There isn't a user with this id");
+      return;
+    }
+
+    return await updateEntity.update(newSubject);
+
+}
+
+//update Subject
+router.route('/subject/:id').put(async(req,res)=>{
+  res.json(await updateSubject(req.params.id, req.body));
+})
+
+
+//delete from Subject
+async function deleteFromSubject(id)
+{
+  let deleteEntity = await getSubjectById(id);
+
+    if (!deleteEntity){
+        console.log("There isn't a subject with this id");
+        return;
+    }
+
+    return await deleteEntity.destroy();
+}
+
+router.route('/subject/:id').delete(async (req, res) => {
+  res.json(await deleteFromSubject(req.params.id));
+})
+
 
     //notes
   
@@ -128,6 +213,50 @@ async function createNote(note){
     res.json(await getNoteById(req.params.id));
 })
 
+//update Notes text
+async function updateNotes(id, newNote)
+{
+    if(parseInt(id) !== newText.NoteId){
+      console.log("Entity id different");
+      return;
+    }
+
+    let updateEntity = await getNoteById(id);
+
+    if(!updateEntity){
+      console.log("There isn't a user with this id");
+      return;
+    }
+
+    return await updateEntity.update(newNote);
+
+}
+
+
+//update Notes
+router.route('/notes/:id').put(async(req,res)=>{
+  res.json(await updateNotes(req.params.id, req.body));
+})
+
+
+//delete from Notes
+async function deleteFromNotes(id)
+{
+  let deleteEntity = await getNoteById(id);
+
+    if (!deleteEntity){
+        console.log("There isn't a note with this id");
+        return;
+    }
+
+    return await deleteEntity.destroy();
+}
+
+router.route('/note/:id').delete(async (req, res) => {
+  res.json(await deleteFromNotes(req.params.id));
+})
+
+
    //attachments
 
 async function createAttachment(attachment){
@@ -153,6 +282,48 @@ router.route('/attachment').get( async (req, res) => {
 
 router.route('/Attachment/:id').get(async(req,res)=> {
     res.json(await getAttachmentById(req.params.id));
+})
+
+//update Attachments
+async function updateAttach(id, newAttach)
+{
+    if(parseInt(id) !== newAttach.AttachmentId){
+      console.log("Entity id diff");
+      return;
+    }
+
+    let updateEntity = await getAttachmentById(id);
+
+    if(!updateEntity){
+      console.log("There isn't a user with this id");
+      return;
+    }
+
+    return await updateEntity.update(newAttach);
+
+}
+
+//update Attchemts
+router.route('/attachment/:id').put(async(req,res)=>{
+  res.json(await updateAttach(req.params.id, req.body));
+})
+
+
+//delete from Attachments
+async function deleteFromAttach(id)
+{
+  let deleteEntity = await getAttachmentById(id);
+
+    if (!deleteEntity){
+        console.log("There isn't a attach with this id");
+        return;
+    }
+
+    return await deleteEntity.destroy();
+}
+
+router.route('/attachment/:id').delete(async (req, res) => {
+  res.json(await deleteFromAttach(req.params.id));
 })
 
 //get notes and attachments from the subject selected
@@ -246,6 +417,47 @@ async function getTagById(id){
 
 router.route('/Tag/:id').get(async(req,res)=> {
     res.json(await getTagById(req.params.id));
+})
+
+//update Tags
+async function updateTags(id, newTag)
+{
+    if(parseInt(id) !== newTag.TagId){
+      console.log("Entity id different");
+      return;
+    }
+
+    let updateEntity = await getTagById(id);
+
+    if(!updateEntity){
+      console.log("There isn't a user with this id");
+      return;
+    }
+
+    return await updateEntity.update(newTag);
+
+}
+
+//update Tags
+router.route('/tag/:id').put(async(req,res)=>{
+  res.json(await updateTags(req.params.id, req.body));
+})
+
+//delete from Tags
+async function deleteFromTags(id)
+{
+  let deleteEntity = await getTagById(id);
+
+    if (!deleteEntity){
+        console.log("There isn't a tag with this id");
+        return;
+    }
+
+    return await deleteEntity.destroy();
+}
+
+router.route('/tag/:id').delete(async (req, res) => {
+  res.json(await deleteFromTags(req.params.id));
 })
 
 //get TagNote
