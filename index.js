@@ -57,6 +57,11 @@ async function createUser(user){
     return await Users.findAll()
   }
 
+//get user by id
+  async function getUserById(id){
+    return await Users.findByPk(id);
+}
+
   router.route('/user').post( async (req, res) => {
     res.json(await createUser(req.body));
   })
@@ -64,6 +69,10 @@ async function createUser(user){
   router.route('/user').get( async (req, res) => {
     res.json(await getUser());
   })
+
+router.route('/User/:id').get(async(req,res)=> {
+    res.json(await getUserById(req.params.id));
+})
 
   //subjects
   
@@ -75,12 +84,21 @@ async function createSubject(subject){
     return await Subjects.findAll()
   }
 
+//get subject by id
+  async function getSubjectById(id){
+      return await Subjects.findByPk(id);
+  }
+
   router.route('/subject').post( async (req, res) => {
     res.json(await createSubject(req.body));
   })
   
   router.route('/subject').get( async (req, res) => {
     res.json(await getSubject());
+  })
+
+router.route('/Subject/:id').get(async(req,res)=> {
+      res.json(await getSubjectById(req.params.id));
   })
 
     //notes
@@ -93,6 +111,11 @@ async function createNote(note){
     return await Notes.findAll()
   }
 
+ //get notes by id
+  async function getNoteById(id){
+    return await Notes.findByPk(id);
+}
+
   router.route('/note').post( async (req, res) => {
     res.json(await createNote(req.body));
   })
@@ -100,6 +123,10 @@ async function createNote(note){
   router.route('/note').get( async (req, res) => {
     res.json(await getNote());
   })
+
+ router.route('/Note/:id').get(async(req,res)=> {
+    res.json(await getNoteById(req.params.id));
+})
 
    //attachments
 
@@ -111,12 +138,21 @@ async function getAttachment(){
   return await Attachments.findAll()
 }
 
+//get attachments by id
+async function getAttachmentById(id){
+    return await Attachments.findByPk(id);
+}
+
 router.route('/attachment').post( async (req, res) => {
   res.json(await createAttachment(req.body));
 })
 
 router.route('/attachment').get( async (req, res) => {
   res.json(await getAttachment());
+})
+
+router.route('/Attachment/:id').get(async(req,res)=> {
+    res.json(await getAttachmentById(req.params.id));
 })
 
 //get notes and attachments from the subject selected
@@ -156,6 +192,7 @@ async function getNotesAttachFromUser(id){
 router.route('/user/:id').get( async (req, res) => {
   res.json(await getNotesAttachFromUser(req.params.id));
 })
+
 
 
 
@@ -202,6 +239,15 @@ router.route('/tags').get( async (req, res) => {
   res.json(await getTags());
 })
 
+//get Tags by id
+async function getTagById(id){
+    return await Tags.findByPk(id);
+}
+
+router.route('/Tag/:id').get(async(req,res)=> {
+    res.json(await getTagById(req.params.id));
+})
+
 //get TagNote
 
 async function getTagNote(){
@@ -210,6 +256,15 @@ async function getTagNote(){
 
 router.route('/tagNote').get( async (req, res) => {
   res.json(await getTagNote());
+})
+
+//get NoteTag by id
+async function getNoteTagById(id){
+  return await TagNote.findByPk(id);
+}
+
+router.route('/NoteTag/:id').get(async(req,res)=> {
+  res.json(await getNoteTagById(req.params.id));
 })
 
 //Alex's changes
